@@ -21,9 +21,9 @@ https://github.com/jerrybeau89/social-api
 npm install social-api
 
 ## Usage
-Navigate to the integrated terminal associated with the index.js file. 
+Navigate to the integrated terminal associated with the server.js file. 
 
- Then you must source the schema.sql, as well as seeds.sql. Ensure your MySQL server is started. 
+ Then you prepare the application to run it. 
 
     You can run the following commands:
 
@@ -33,7 +33,7 @@ Navigate to the integrated terminal associated with the index.js file.
 
   `npm run start`
 
-  or 
+  or to run nodemon 
 
   `npm run develop`
 
@@ -96,7 +96,7 @@ SOFTWARE.
 Tests can be conducted through insomnia or some other similar application.
 
 ## Video
-Here is a video of the program being used: 
+Here is a video of the program being used: https://drive.google.com/file/d/1F8CuO5ekrCfKQ7rkZODrzz5rMdrUhCRv/view
 
 ## Questions
 

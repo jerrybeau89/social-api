@@ -1,4 +1,4 @@
-const { Schema, Types, model } = require('mongoose');
+const { Schema, DataTypes, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
 
 const thoughtSchema = new Schema(
@@ -32,11 +32,7 @@ const thoughtSchema = new Schema(
          //@description converting military time to standard
         let standardTime = timestamp.getHours() % 12 === 0 ? `12` : timestamp.getHours() % 12;
         let timeframe = timestamp.getHours() > 12 ? 'PM' : 'AM' ;
-        return `${timestamp.toString().substring(4,7)} 
-                ${day}, 
-                ${timestamp.getFullYear()} at 
-                ${standardTime}:${timestamp.getMinutes()} 
-                ${timeframe}`;
+        return `${timestamp.toString().substring(4,7)} ${day}, ${timestamp.getFullYear()} at ${standardTime}:${timestamp.getMinutes()} ${timeframe}`;
       }
     },
     username: {
@@ -44,7 +40,10 @@ const thoughtSchema = new Schema(
       required: true,
       ref: 'user'
     },
-    reactions: [reactionSchema],
+    reactions: [
+      {type: String,
+      ref: 'reaction'},
+    ]
   },
   {
     toJSON: {

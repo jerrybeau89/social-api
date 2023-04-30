@@ -3,7 +3,7 @@ const {  Thought, User, Reaction } = require('../models');
 //@description creates a new reaction
 //@apiRequest use the json body to create reaction 
 // {
-//    "thoughtText": "",
+//    "reactionBody": "",
 //    "username": ""
 // }
 const postReaction = async (req, res) => {
@@ -11,8 +11,8 @@ const postReaction = async (req, res) => {
     
     .then(({_id}) => {
       return Thought.findOneAndUpdate(
-          {_id: req.params.id},
-          {$push: {reactions: req.body}},
+          {_id: req.params.thoughtId},
+          {$push: {reactions: _id}},
           {new: true});
     })
     
@@ -40,8 +40,8 @@ const deleteReaction = async (req, res) => {
         res.status(404).json({message: "No reaction to delete."});
         return;
       } return Thought.findOneAndUpdate(
-        {_id: req.params.id},
-        {$push: {reactions: req.body}},
+        {_id: req.params.thoughtId},
+        {$pull: {reactions: req.params.reactionId}},
         {new: true});
     })
     

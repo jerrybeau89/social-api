@@ -5,7 +5,7 @@ const getUsers = async (req, res) => {
   await User.find()
     
     .populate('thoughts friends')
-    
+    .select('-__v')
     .then((allUsers) => 
         res.json(allUsers))
     .catch((err) => 
@@ -18,7 +18,7 @@ const getOneUser = async (req, res) => {
   await User.findOne({ _id: req.params.id })
     
     .populate('thoughts friends')
-    
+    .select('-__v')
     .then((oneUser) => {
 
         if(!oneUser){
@@ -41,7 +41,7 @@ const createUser = async (req, res) => {
    await User.create(req.body)
 
      .then((newUser) => 
-      res.json({message: "User created successfully."}, newUser))
+      res.json({message: "User created successfully."}))
     
      .catch((err) => 
       res.status(500).json(err));
@@ -65,7 +65,7 @@ const updateUser = async (req, res) => {
           res.status(404).json({message: 'User does not exist, Sorry.'});
           return;
         }
-       res.json({message: "User updated successfully."}, oneUser);
+       res.json({message: "User updated successfully."});
       })
     .catch((err) => 
       res.status(500).json(err));
@@ -104,7 +104,7 @@ const addFriend = async (req, res) => {
           res.status(404).json({message: 'Sorry no one wants to be your friend.'});
           return;
         }
-      res.json({message: "You have a friend!"}, friend);
+      res.json({message: "You have a friend!"});
       })
     .catch((err) => 
       res.status(500).json(err));
@@ -124,7 +124,7 @@ const deleteFriend = async (req, res) => {
         res.status(404).json({message: 'Sorry no you do not have a friend.'});
         return;
       }
-    res.json({message: "Sorry you lost your friend!"}, friend);
+    res.json({message: "Sorry you lost your friend!"});
     })
     .catch((err) => 
       res.status(500).json(err));

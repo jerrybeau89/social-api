@@ -10,7 +10,7 @@ router.route('/:thoughtId/reaction')
 
   //@description base route to delete a reaction
   //@route /api/thought/:thoughtId/reaction/:reactionId
-router.route('/:thoughtId/reactions/:reactionId')
+router.route('/:thoughtId/reaction/:reactionId')
   .delete(deleteReaction);
 
 module.exports = router;

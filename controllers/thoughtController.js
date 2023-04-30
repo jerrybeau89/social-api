@@ -3,11 +3,10 @@ const {  Thought, User } = require('../models');
 //@description gets all thoughts and reactions associated 
 const getThoughts = async(req, res)=>{
   await Thought.find({})
-
   .populate('reactions')
+  .select('-__v')
   //@description sorts so newest thought is on top
   .sort({_id: -1})
-  
   .then((thoughts) => 
     res.json(thoughts))
   .catch((err) => 
@@ -20,7 +19,7 @@ const getOneThought = async (req, res) => {
    await Thought.findOne({ _id: req.params.id })
       
       .populate('reactions')
-
+      .select('-__v')
       .then((oneThought) => {
         
         if(!oneThought) {
@@ -78,7 +77,7 @@ const updateThought = async (req, res) => {
           res.status(404).json({message: "No thought found to update."});
           return;
         }
-      res.json({message: "Thought updated successfully."}, updatedThought);
+      res.json({message: "Thought updated successfully."});
     })
     .catch((err) => 
       res.status(500).json(err));
@@ -95,7 +94,7 @@ const deleteThought = async (req, res) => {
         res.status(404).json({message: "No thought found."});
         return;
       } return User.findOneAndUpdate(
-        {username: deleteThought.username},
+        {username: thought.username},
         {$pull: {thoughts: req.params.thoughtId}},
         {new: true}
       );

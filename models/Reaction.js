@@ -1,21 +1,20 @@
 const {Schema, Types, model} = require('mongoose');
+const thoughtSchema = require('./Thought');
+const userSchema = require('./User');
 
 const reactionSchema = new Schema(
   {
-    reactionId: {
-        type: Schema.Types.ObjectId,
-        default: () => new Types.ObjectId()
-    },
+    
     reactionBody: {
-    type: String,
-    required: true,
-    trim: true,
-    minlength: 1,
-    maxlength: 280
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 280,
     },
     username: {
         type: String,
-        required: true
+        required: true,
+        ref: 'user'
     },
     createdAt: {
       type: Date,
@@ -40,12 +39,8 @@ const reactionSchema = new Schema(
         //@description converting military time to standard
         let standardTime = timestamp.getHours() % 12 === 0 ? `12` : timestamp.getHours() % 12;
         let timeframe = timestamp.getHours() > 12 ? 'PM' : 'AM' ;
-        return `${timestamp.toString().substring(4,7)} 
-                ${day}, 
-                ${timestamp.getFullYear()} at 
-                ${standardTime}:${timestamp.getMinutes()} 
-                ${timeframe}`;
-      }
+        return `${timestamp.toString().substring(4,7)} ${day}, ${timestamp.getFullYear()} at ${standardTime}:${timestamp.getMinutes()} ${timeframe}`;
+      },
     },
   },
   {
@@ -57,4 +52,7 @@ const reactionSchema = new Schema(
   }
 );
 
-module.exports = reactionSchema;
+
+const Reaction = model('reaction', reactionSchema);
+
+module.exports = Reaction;
